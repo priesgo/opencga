@@ -106,7 +106,7 @@ public class AnnotateVariantsCommandExecutor extends CommandExecutor {
             logger.info("Starting annotation creation ");
             annotationFile = variantAnnotationManager.createAnnotation(outDir,
                     annotateVariantsCommandOptions.fileName == null ? annotateVariantsCommandOptions.dbName : annotateVariantsCommandOptions.fileName,
-                    query, new QueryOptions());
+                    query, new QueryOptions(options));
             logger.info("Finished annotation creation {}ms", System.currentTimeMillis() - start);
         }
 
@@ -117,7 +117,7 @@ public class AnnotateVariantsCommandExecutor extends CommandExecutor {
 //                annotationFile = new URI(null, c.load, null);
                 annotationFile = Paths.get(annotateVariantsCommandOptions.load).toUri();
             }
-            variantAnnotationManager.loadAnnotation(annotationFile, new QueryOptions());
+            variantAnnotationManager.loadAnnotation(annotationFile, new QueryOptions(options));
             logger.info("Finished annotation load {}ms", System.currentTimeMillis() - start);
         }
     }

@@ -87,6 +87,8 @@ public class CellBaseVariantAnnotator extends VariantAnnotator {
             String species = options.getString(VariantAnnotationManager.SPECIES);
             String assembly = options.getString(VariantAnnotationManager.ASSEMBLY);
             String cellbaseVersion = storageConfiguration.getCellbase().getVersion();
+            queryOptions.put("assembly", assembly);
+            queryOptions.put("species", species);
             List<String> hosts = storageConfiguration.getCellbase().getHosts();
             if (hosts.isEmpty()) {
                 throw new VariantAnnotatorException("Missing defaultValue \"CellBase Hosts\"");
