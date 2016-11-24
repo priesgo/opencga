@@ -247,5 +247,36 @@ public class FileScannerTest extends TestCase {
 
     }
 
+    @Test
+    public void testComplexAdd2() throws IOException, CatalogException {
+
+        CatalogManagerTest.createDebugFile("/tmp/catalog_scan_test_folder/file.txt");
+
+        FileScanner fileScanner = new FileScanner(catalogManager);
+        List<File> files = fileScanner.scan(folder, directory.toUri(), FileScanner.FileScannerPolicy.REPLACE, true, true, sessionIdUser);
+
+        for (File file : files) {
+            System.out.println("file.getPath() = " + file.getPath());
+        }
+
+        URI fileUri = catalogManager.getFileUri(folder);
+        Path studyPath = Paths.get(fileUri);
+
+
+        Files.createDirectory(Paths.get("/tmp/catalog_scan_test_folder/folder_linked"));
+        CatalogManagerTest.createDebugFile(Paths.get("/tmp/catalog_scan_test_folder/folder_linked").resolve("file.txt").toString());
+        Files.createSymbolicLink(studyPath.resolve("folder_linked"), studyPath.resolve("/tmp/catalog_scan_test_folder/folder_linked"));
+
+        Files.createDirectory(studyPath.resolve("asdfasdf_folder"));
+        CatalogManagerTest.createDebugFile(studyPath.resolve("asdfasdf_folder").resolve("file.txt").toString());
+
+        files = fileScanner.scan(folder, null, FileScanner.FileScannerPolicy.REPLACE, true, true, sessionIdUser);
+
+        // Even after linking the folder, folder_linked should be ignored.
+        for (File file : files) {
+            assertTrue(!file.getName().equalsIgnoreCase("folder_linked"));
+        }
+    }
+
 
 }

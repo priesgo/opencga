@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
@@ -184,6 +185,9 @@ public class FileScanner {
         for (Iterator<URI> iterator = uris.iterator(); iterator.hasNext(); ) {
             long fileScanStart = System.currentTimeMillis();
             URI uri = iterator.next();
+            if (Files.isSymbolicLink(Paths.get(uri))) {
+                continue;
+            }
             URI generatedFile = directoryToScan.relativize(uri);
             String filePath = Paths.get(directory.getPath(), generatedFile.toString()).toString();
             if (generatedFile.getPath().endsWith("/")) {
