@@ -20,8 +20,9 @@ Suggests:
     knitr,
     rmarkdown,
     miniUI,
-    shiny
-Collate: 
+    shiny,
+    testthat
+Collate:
     'AllClasses.R'
     'AllGenerics.R'
     'commons.R'
@@ -36,7 +37,8 @@ Collate:
     'Project-methods.R'
     'Sample-methods.R'
     'Study-methods.R'
+    'TokenRenewal-methods.R'
     'User-methods.R'
     'VariableSet-methods.R'
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr

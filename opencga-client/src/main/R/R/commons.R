@@ -103,25 +103,9 @@ fetchOpenCGA <- function(object=object, category=NULL, categoryId=NULL,
                                         units="mins"))
         if (timeLeft > 0 & timeLeft <= 5){
             print("INFO: Your session will expire in less than 5 minutes.")
-            urlNewToken <- paste0(host, version, "users/", object@user, "/", "login", "?sid=", object@sessionId)
-            resp <- httr::POST(urlNewToken, add_headers(c("Content-Type"="application/json",
-                                                          "Accept"="application/json",
-                                                          "Authorisation"="Bearer")), body="{}")
-            content <- httr::content(resp, as="text", encoding = "utf-8")
-            if (length(fromJSON(content)$response$result[[1]]$token > 0)){
-                object@sessionId <- fromJSON(content)$response$result[[1]]$token
-                loginInfo <- unlist(strsplit(x=object@sessionId, split="\\."))[2]
-                loginInfojson <- jsonlite::fromJSON(rawToChar(base64enc::base64decode(what=loginInfo)))
-                expirationTime <- as.POSIXct(loginInfojson$exp, origin="1970-01-01")
-                object@expirationTime <- as.character(expirationTime)
-                print("Your session has been renewed!")
-            }else{
-                warning(paste0("WARNING: Your token could not be renewed, your session will expire in ", 
-                             round(x = timeLeft, digits = 2), " minutes"))
-            }
+            renewToken(object, host, version)
         }else if(timeLeft <= 0){
             stop("ERROR: Your session has expired, please renew your connection.")
-            
         }
 
         response <- callREST(pathUrl=pathUrl, params=params, 

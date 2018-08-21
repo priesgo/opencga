@@ -1,4 +1,9 @@
 ################################################################################
+## Token renewal
+setGeneric("renewToken", function(OpencgaR, host, version, params=NULL, ...)
+  standardGeneric("renewToken"))
+
+################################################################################
 ## UserClient
 setGeneric("userClient", function(OpencgaR, user, action, params=NULL, ...)
     standardGeneric("userClient"))
