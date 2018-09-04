@@ -103,7 +103,7 @@ fetchOpenCGA <- function(object=object, category=NULL, categoryId=NULL,
                                         units="mins"))
         if (timeLeft > 0 & timeLeft <= 5){
             print("INFO: Your session will expire in less than 5 minutes.")
-            renewToken(object, host, version)
+            renewToken(OpencgR = object)
         }else if(timeLeft <= 0){
             stop("ERROR: Your session has expired, please renew your connection.")
         }

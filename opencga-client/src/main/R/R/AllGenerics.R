@@ -1,6 +1,6 @@
 ################################################################################
 ## Token renewal
-setGeneric("renewToken", function(OpencgaR, host, version, params=NULL, ...)
+setGeneric("renewToken", function(OpencgaR, params=NULL, ...)
   standardGeneric("renewToken"))
 
 ################################################################################
