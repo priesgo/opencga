@@ -5,6 +5,7 @@
 #' @slot OpencgaR an object OpencgaR generated using initOpencgaR and/or opencgaLogin 
 #' where the connection and session details are stored
 #' @slot params list containing additional query or body params
+#' @return An object of class OpencgaR
 #' @seealso \url{https://github.com/opencb/opencga/wiki} and the RESTful API documentation 
 #' \url{http://bioinfo.hpc.cam.ac.uk/opencga/webservices/}
 #' @export
@@ -26,4 +27,5 @@ setMethod("renewToken", "OpencgaR", function(OpencgaR, params=NULL, ...) {
     warning(paste0("WARNING: Your token could not be renewed, your session will expire in ", 
                    round(x = timeLeft, digits = 2), " minutes"))
   }
+  return (OpencgaR)
 })
