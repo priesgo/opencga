@@ -101,7 +101,7 @@ fetchOpenCGA <- function(object=object, category=NULL, categoryId=NULL,
         timeNow <- Sys.time()
         timeLeft <- as.numeric(difftime(as.POSIXct(object@expirationTime), timeNow, 
                                         units="mins"))
-        if (timeLeft > 0 & timeLeft <= 5){
+        if (timeLeft > 0 & timeLeft <= 60){
             print("INFO: Your session will expire in less than 5 minutes.")
             object <- opencgaR::renewToken(object)
         }else if(timeLeft <= 0){
